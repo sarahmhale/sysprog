@@ -11,12 +11,6 @@ void appendEndOfList(node * head, node * temp);
 void showList(node * head);
 //void append(node * head, node * temp);
 //void pop(node * head);
-int main(){
-  node *head = NULL;
-  head = createLinkedList(3);
-  showList(head);
-}
-
 
 node * createLinkedList(int nrOfNodes){
   node * temp = NULL;

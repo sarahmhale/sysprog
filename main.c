@@ -5,6 +5,8 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include "linkedlist.h"
 int main(int argc, char *argv[]){
 
   if(argv[1] != NULL){
@@ -18,6 +20,7 @@ int main(int argc, char *argv[]){
 
     fclose(fp);
   }else{
+    showList(createLinkedList(3));
     printf("%s\n","NO INPUT FILE" );
   }
   return 0;
