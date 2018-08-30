@@ -9,12 +9,12 @@
 #define BUFSIZE 1023
 void read(FILE * fp);
 int main(int argc, char *argv[]){
+
   if(argv[1] != NULL){
     FILE * fp;
     fp = fopen(argv[1],"r");
     read(fp);
     fclose(fp);
-
   }else{
     read(stdin);
   }
@@ -23,6 +23,9 @@ int main(int argc, char *argv[]){
 
 void read(FILE * fp){
   char buffer[BUFSIZE];
+  if (!feof(stdin) && fp != NULL){
+    fprintf(stderr, "NO INPUT FILE OR STDIN" );
+  }
   while(fgets(buffer, BUFSIZE, fp) != NULL){
     puts(buffer);
   }
