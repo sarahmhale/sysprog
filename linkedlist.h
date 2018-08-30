@@ -8,20 +8,36 @@ typedef struct node {
 
 
 int Length(struct node* head);
-//void Push(struct node** headRef, int newData);
+void Push(struct node** headRef, void * newData);
+void Print();
 // node * createLinkedList(int nrOfNodes);
 // void appendEndOfList(node * head, node * temp);
 
 int Length(node * head){
+  printf("%p\n",head->value);
   node * current = head;
   int length = 0;
-  while(current->next != NULL){
-    current = current->next;
-    length++;
-  }
+  // while(current->next != NULL){
+  // //   current = current->next;
+  //   length++;
+  // }
   return length;
 }
 
+void Push(struct node* head, void * newData){
+  node * temp = (node*)malloc(sizeof(node));
+  temp->value = newData;
+  temp->next = head;
+  head = temp;
+
+}
+void Print(){
+  struct node * current = head;
+  while(current != NULL){
+   printf("Node: %p @ %p\n", current->value, current);
+    current = current->next;
+  }
+}
 
 // void showList(node * head);
 //void append(node * head, node * temp);
@@ -51,12 +67,4 @@ int Length(node * head){
 //     current = current->next;
 //   }
 //   current->next = temp;
-// }
-
-// void showList(node * head){
-//   node * current = head;
-//   while(current->next != NULL){
-//    printf("Node: %p @ %p\n", current->value, current);
-//     current = current->next;
-//   }
 // }

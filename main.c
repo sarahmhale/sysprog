@@ -7,22 +7,31 @@
 #include <stdlib.h>
 #include "linkedlist.h"
 #define BUFSIZE 1023
-void read(FILE * fp);
+struct node* head;
+
+void read(FILE * fp,struct node* head);
 int main(int argc, char *argv[]){
+  head = NULL;
   if(argv[1] != NULL){
     FILE * fp;
     fp = fopen(argv[1],"r");
-    read(fp);
+    read(fp,head);
     fclose(fp);
   }else{
-    read(stdin);
+    read(stdin,head);
   }
   return 0;
 }
 
-void read(FILE * fp){
+void read(FILE * fp, struct node** head){
   char buffer[BUFSIZE];
-  if (!feof(stdin) && fp != NULL){
+  Push(head, (void*)1);
+  Length(head);
+
+  fseek (fp, 0, SEEK_END);
+  int size = ftell(fp);
+
+  if (!feof(stdin) && size == 0){
     fprintf(stderr, "NO INPUT FILE OR STDIN" );
   }
   while(fgets(buffer, BUFSIZE, fp) != NULL){
