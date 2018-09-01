@@ -9,7 +9,6 @@
 #define BUFSIZE 1023
 
 void read(FILE * fp);
-int checkInput(FILE * fp);
 int main(int argc, char *argv[]){
 
   if(argv[1] != NULL){
@@ -23,18 +22,11 @@ int main(int argc, char *argv[]){
   return 0;
 }
 
-int checkInput(FILE * fp){
-  int rightInput = 1;
-  if (feof(stdin) && feof(fp)){
-    fprintf(stderr, "NO INPUT FILE OR STDIN" );
-    rightInput = 0;
-  }
-  return rightInput;
-}
-
 void read(FILE * fp){
-  if(checkInput(fp)){
-    char buffer[BUFSIZE];
+  char buffer[BUFSIZE];
+  if(fgets(buffer, BUFSIZE, fp) == NULL){
+    fprintf(stderr, "NO INPUT FILE OR STDIN" );
+  }else{
     while(fgets(buffer, BUFSIZE, fp) != NULL){
       puts(buffer);
     }
