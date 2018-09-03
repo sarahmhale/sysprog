@@ -11,6 +11,7 @@
 
 void read(FILE * fp);
 void print(node * head);
+void bubbelsort (node * head);
 void checkObligatoryFields(char * c);
 node * newNode(unsigned int uid, char* uname);
 
@@ -35,12 +36,30 @@ int main(int argc, char *argv[]){
 // }
 void print(node * head){
   node * current = head;
+  printf("%d:%s\n", head->uid, head->uname);
   while(current->next != NULL){
    current = current->next;
    printf("%d:%s\n", current->uid, current->uname);
   }
 }
 
+
+void bubbelsort (node * head){
+  node * i, * j;
+  node * temp;
+  for ( i = head; i->next != NULL; i = i->next ){
+    for ( j = i->next; j != NULL; j = j->next ){
+      if(i->uid > j->uid){
+        temp = newNode(i->uid,i->uname);
+        i->uid = j->uid;
+        i->uname = j->uname;
+        j->uid = temp->uid;
+        j->uname = temp->uname;
+      }
+    }
+  }
+  print(head);
+}
 
 
 void read(FILE * fp){
@@ -69,8 +88,7 @@ void read(FILE * fp){
       current = current->next;
     }
   }
-
-  print(head);
+  bubbelsort(head);
 }
 
 
