@@ -1,6 +1,6 @@
-/* <fil>.c
- *  <Namn> <Namnsson>
- *  Laboration <n> <kurs> <termin>
+/* mpasswdsort.c
+ *  Sarah Hale
+ *  Laboration 1 Systemnära programmering HT18
  *  <Kort enradsbeskrivning av filens innehåll och syfte>
  */
 #include <stdio.h>
@@ -16,14 +16,19 @@ void checkObligatoryFields(char * c);
 node * newNode(unsigned int uid, char* uname);
 
 int main(int argc, char *argv[]){
-  if(argv[1] != NULL){
-    FILE * fp;
-    fp = fopen(argv[1],"r");
-    read(fp);
-    fclose(fp);
+  if(argc >1){
+    if(argv[1] != NULL){
+      FILE * fp;
+      fp = fopen(argv[1],"r");
+      read(fp);
+      fclose(fp);
+    }else{
+      read(stdin);
+    }
   }else{
-    read(stdin);
+    fprintf(stderr,"%s\n", "NO INPUT");
   }
+
   return 0;
 }
 
