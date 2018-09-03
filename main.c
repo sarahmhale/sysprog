@@ -6,11 +6,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "linkedlist.h"
+#include <string.h>
 #define BUFSIZE 1023
 
 void read(FILE * fp);
+void showList(node * head);
+void checkObligatoryFields(char * c);
+node * newNode(unsigned int uid, char* uname);
 int main(int argc, char *argv[]){
-
   if(argv[1] != NULL){
     FILE * fp;
     fp = fopen(argv[1],"r");
@@ -22,34 +25,64 @@ int main(int argc, char *argv[]){
   return 0;
 }
 
-void read(FILE * fp){
-  char buffer[BUFSIZE];
-  if(fgets(buffer, BUFSIZE, fp) == NULL){
-    fprintf(stderr, "NO INPUT FILE OR STDIN" );
-  }else{
-    while(fgets(buffer, BUFSIZE, fp) != NULL){
-      puts(buffer);
-    }
+// void checkObligatoryFields(char * c){
+//     printf("uname: %lu\n", strlen(c));
+//       printf("uname: %d\n", strcmp(c, " "));
+//   if ((c && !c[0]) || strcmp(c, " ")) {
+//     printf("c is empty\n");
+//   }
+// }
+void showList(node * head){
+  node * current = head;
+  while(current->next != NULL){
+   current = current->next;
+   printf("Node: %d @ %s\n", current->uid, current->uname);
   }
 }
 
-// void read(FILE * fp){
-//   fseek (fp, 0, SEEK_END);
-//   int size = ftell(fp);
-//   if (!feof(stdin) && size == 0){
-//     fprintf(stderr, "NO INPUT FILE OR STDIN" );
-//
-//   }
-//     char buffer[BUFSIZE];
-//
-//     while(fgets(buffer, BUFSIZE, fp) != NULL){
-//       printf("%s\n","here" );
-//       puts(buffer);
-//       // for(int i = 0; buffer[i] != '\0'; ++i) {
-//       //     //Push((void *)buffer[i]);
-//       //     printf("%c\n",buffer[i] );
-//       //     Print();
-//       // }
-//
-//   }
-// }
+void read(FILE * fp){
+  node * head = NULL;
+  node * current = NULL;
+  char buffer[BUFSIZE];
+  const char seperator[2] = ":";
+  // if(fgets(buffer, BUFSIZE, fp) == NULL){
+  //   fprintf(stderr, "FILE IS EMPTY" );
+  //   exit(EXIT_FAILURE);
+  // }else{
+  while(fgets(buffer, BUFSIZE, fp) != NULL){
+    char * uname = strtok (buffer,seperator);
+    strtok (NULL,seperator);
+    char * uid = strtok (NULL,seperator);
+    char * gid = strtok (NULL,seperator);
+    strtok (NULL,seperator);
+    char * directory = strtok (NULL,seperator);
+    char * shell = strtok (NULL,seperator);
+
+    if(head == NULL){
+      head = newNode(atoi(uid), uname);
+      current = head;
+    }else{
+      current->next = newNode(atoi(uid), uname);
+      current = current->next;
+    }
+  }
+
+  showList(head);
+}
+
+node * newNode(unsigned int uid, char* uname){
+  node * temp = malloc(sizeof(node));
+  temp->uid = uid;
+  temp->uname =  malloc(strlen(uname) + 1);
+  strcpy(temp->uname, uname);
+  temp->next = NULL;
+  return temp;
+
+}
+
+
+
+// printf("uid: %s\n",uid );
+// printf("gid %s\n",gid );
+// printf("directory %s\n",directory );
+// printf("shell: %s\n",shell );
