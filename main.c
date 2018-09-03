@@ -10,9 +10,10 @@
 #define BUFSIZE 1023
 
 void read(FILE * fp);
-void showList(node * head);
+void print(node * head);
 void checkObligatoryFields(char * c);
 node * newNode(unsigned int uid, char* uname);
+
 int main(int argc, char *argv[]){
   if(argv[1] != NULL){
     FILE * fp;
@@ -32,13 +33,15 @@ int main(int argc, char *argv[]){
 //     printf("c is empty\n");
 //   }
 // }
-void showList(node * head){
+void print(node * head){
   node * current = head;
   while(current->next != NULL){
    current = current->next;
-   printf("Node: %d @ %s\n", current->uid, current->uname);
+   printf("%d:%s\n", current->uid, current->uname);
   }
 }
+
+
 
 void read(FILE * fp){
   node * head = NULL;
@@ -48,7 +51,7 @@ void read(FILE * fp){
   // if(fgets(buffer, BUFSIZE, fp) == NULL){
   //   fprintf(stderr, "FILE IS EMPTY" );
   //   exit(EXIT_FAILURE);
-  // }else{
+  // }
   while(fgets(buffer, BUFSIZE, fp) != NULL){
     char * uname = strtok (buffer,seperator);
     strtok (NULL,seperator);
@@ -67,8 +70,9 @@ void read(FILE * fp){
     }
   }
 
-  showList(head);
+  print(head);
 }
+
 
 node * newNode(unsigned int uid, char* uname){
   node * temp = malloc(sizeof(node));
