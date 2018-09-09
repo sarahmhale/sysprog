@@ -14,6 +14,7 @@ void print(node * head);
 void bubbelsort (node * head);
 void checkObligatoryFields(char * c);
 node * newNode(unsigned int uid, char* uname);
+char * strtok_single(char * buffer, char const * delims);
 
 int main(int argc, char *argv[]){
   if(argc >1){
@@ -28,17 +29,35 @@ int main(int argc, char *argv[]){
   }else{
     fprintf(stderr,"%s\n", "NO INPUT");
   }
-
   return 0;
 }
 
-// void checkObligatoryFields(char * c){
-//     printf("uname: %lu\n", strlen(c));
-//       printf("uname: %d\n", strcmp(c, " "));
-//   if ((c && !c[0]) || strcmp(c, " ")) {
-//     printf("c is empty\n");
-//   }
-// }
+void checkObligatoryFields(){
+
+}
+
+char * strtok_single (char * str, char const * delims){
+  static char  * src = NULL;
+  char  *  p,  * ret = 0;
+
+  if (str != NULL)
+    src = str;
+
+  if (src == NULL)
+    return NULL;
+
+  if ((p = strpbrk (src, delims)) != NULL) {
+    *p  = 0;
+    ret = src;
+    src = ++p;
+
+  } else if (*src) {
+    ret = src;
+    src = NULL;
+  }
+
+  return ret;
+}
 void print(node * head){
   node * current = head;
   printf("%d:%s\n", head->uid, head->uname);
@@ -77,13 +96,14 @@ void read(FILE * fp){
   //   exit(EXIT_FAILURE);
   // }
   while(fgets(buffer, BUFSIZE, fp) != NULL){
-    char * uname = strtok (buffer,seperator);
-    strtok (NULL,seperator);
-    char * uid = strtok (NULL,seperator);
-    char * gid = strtok (NULL,seperator);
-    strtok (NULL,seperator);
-    char * directory = strtok (NULL,seperator);
-    char * shell = strtok (NULL,seperator);
+    char * uname = strtok_single(buffer, ":");
+    strtok_single(NULL, ":");
+    printf("%s\n",uname );
+    char * uid = strtok_single(NULL,seperator);
+    char * gid = strtok_single (NULL,seperator);
+    strtok_single (NULL,seperator);
+    char * directory = strtok_single (NULL,seperator);
+    char * shell = strtok_single (NULL,seperator);
 
     if(head == NULL){
       head = newNode(atoi(uid), uname);
