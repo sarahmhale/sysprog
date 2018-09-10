@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include "linkedlist.h"
 #include <string.h>
+#include<ctype.h>
 #define BUFSIZE 1023
 
 void read(FILE * fp);
@@ -89,6 +90,23 @@ void bubbelsort (node * head){
   print(head);
 }
 
+const char * isNumber(char const * str){
+  if(str == NULL || *str == '\0'){
+    fprintf(stderr, "Invalid UID\n" );
+    return NULL;
+  }
+
+  while(*str){
+    char c =*str;
+    if(!isdigit(c)){
+      fprintf(stderr, "Invalid UID\n" );
+      return NULL;
+    }
+    str++;
+  }
+  return str;
+
+}
 node * getDataFromLine(char * buffer){
   const char seperator[2] = ":";
   char * uname = strtok_single(buffer, ":");
@@ -96,8 +114,12 @@ node * getDataFromLine(char * buffer){
     fprintf(stderr, "Invalid format\n" );
     return NULL;
   }
+
   strtok_single(NULL, ":");
   char * uid = strtok_single(NULL,seperator);
+  if(isNumber(uid) == NULL){
+    return NULL;
+  }
   char * gid = strtok_single (NULL,seperator);
   strtok_single (NULL,seperator);
   char * directory = strtok_single (NULL,seperator);
