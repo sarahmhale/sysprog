@@ -66,20 +66,17 @@ const char * isNumber(char const * str){
     while(*str){
       char c =*str;
       if(!isdigit(c)){
-        fprintf(stderr, "Invalid format\n" );
         return NULL;
       }
       str++;
     }
     return str;
   }
-  fprintf(stderr, "Invalid format\n" );
   return NULL;
 }
 
 const char * isStringEmpty(char const * str){
   if(str == NULL || str[0] == '\0'){
-    fprintf(stderr, "Invalid format\n" );
     return NULL;
   }
   return str;
@@ -88,10 +85,9 @@ const char * isStringEmpty(char const * str){
 
 void read(FILE * fp){
   node * head = NULL;
-
+  int line = 1;
   char buffer[BUFSIZE];
   while(fgets(buffer, BUFSIZE, fp) != NULL){
-    printf("%s\n",buffer );
     const char seperator[2] = ":";
     char * uname = strtok_single(buffer, ":");
     strtok_single(NULL, ":");
@@ -101,19 +97,26 @@ void read(FILE * fp){
     char * directory = strtok_single (NULL,seperator);
     char * shell = strtok_single (NULL,seperator);
 
-    if(isStringEmpty(uname) == NULL || isStringEmpty(directory) == NULL ||
-     isStringEmpty(shell) == NULL){
-        printf("Error creating asadasdasd\n");
-    }
-    else if(isNumber(uid) == NULL || isNumber(gid) == NULL){
-        printf("Error creating a new noasdasdasde.\n");
 
+    if(isStringEmpty(uname) == NULL){
+      fprintf(stderr,"Line %d : %s\n",line, "uname format wrong");
+    }
+    else if(isStringEmpty(directory) == NULL){
+        fprintf(stderr,"Line %d : %s\n",line, "directory format wrong");
+    }
+    else if(isStringEmpty(shell) == NULL){
+        fprintf(stderr,"Line %d : %s\n",line, "shell format wrong");
+    }
+    else if(isNumber(uid) == NULL){
+        fprintf(stderr,"Line %d : %s\n",line, "uid format wrong");
+    }
+
+    else if(isNumber(gid) == NULL){
+        fprintf(stderr,"Line %d :%s\n",line, "gid format wrong");
     }else{
-      head = insert(atoi(uid),uname, head);
-      printf("%i\n",head->uid );
-      printf("%s\n",head->uname );
-    }
-
+       head = insert(atoi(uid),uname, head);
+     }
+     line++;
   }
 
   head = bubbelsort(head);
