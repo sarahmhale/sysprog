@@ -13,6 +13,7 @@ void read(FILE * fp);
 void print(node * head);
 void bubbelsort (node * head);
 void checkObligatoryFields(char * c);
+node * getDataFromLine(char * buffer);
 node * newNode(unsigned int uid, char* uname);
 char * strtok_single(char * buffer, char const * delims);
 
@@ -35,7 +36,10 @@ int main(int argc, char *argv[]){
 void checkObligatoryFields(){
 
 }
-
+/*
+This code is taken from stackoverflow, source:
+https://stackoverflow.com/questions/8705844/need-to-know-when-no-data-appears-between-two-token-separators-using-strtok
+*/
 char * strtok_single (char * str, char const * delims){
   static char  * src = NULL;
   char  *  p,  * ret = 0;
@@ -85,31 +89,34 @@ void bubbelsort (node * head){
   print(head);
 }
 
+node * getDataFromLine(char * buffer){
+  const char seperator[2] = ":";
+  char * uname = strtok_single(buffer, ":");
+  strtok_single(NULL, ":");
+  char * uid = strtok_single(NULL,seperator);
+  char * gid = strtok_single (NULL,seperator);
+  strtok_single (NULL,seperator);
+  char * directory = strtok_single (NULL,seperator);
+  char * shell = strtok_single (NULL,seperator);
+
+  return newNode(atoi(uid), uname);
+}
 
 void read(FILE * fp){
   node * head = NULL;
   node * current = NULL;
   char buffer[BUFSIZE];
-  const char seperator[2] = ":";
   // if(fgets(buffer, BUFSIZE, fp) == NULL){
   //   fprintf(stderr, "FILE IS EMPTY" );
   //   exit(EXIT_FAILURE);
   // }
   while(fgets(buffer, BUFSIZE, fp) != NULL){
-    char * uname = strtok_single(buffer, ":");
-    strtok_single(NULL, ":");
-    printf("%s\n",uname );
-    char * uid = strtok_single(NULL,seperator);
-    char * gid = strtok_single (NULL,seperator);
-    strtok_single (NULL,seperator);
-    char * directory = strtok_single (NULL,seperator);
-    char * shell = strtok_single (NULL,seperator);
-
+    node * newNode= getDataFromLine(buffer);
     if(head == NULL){
-      head = newNode(atoi(uid), uname);
+      head = newNode;
       current = head;
     }else{
-      current->next = newNode(atoi(uid), uname);
+      current->next = newNode;
       current = current->next;
     }
   }
