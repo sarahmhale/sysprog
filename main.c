@@ -92,6 +92,10 @@ void bubbelsort (node * head){
 node * getDataFromLine(char * buffer){
   const char seperator[2] = ":";
   char * uname = strtok_single(buffer, ":");
+  if(uname == NULL || uname[0] == '\0'){
+    fprintf(stderr, "Invalid format\n" );
+    return NULL;
+  }
   strtok_single(NULL, ":");
   char * uid = strtok_single(NULL,seperator);
   char * gid = strtok_single (NULL,seperator);
@@ -112,12 +116,14 @@ void read(FILE * fp){
   // }
   while(fgets(buffer, BUFSIZE, fp) != NULL){
     node * newNode= getDataFromLine(buffer);
-    if(head == NULL){
-      head = newNode;
-      current = head;
-    }else{
-      current->next = newNode;
-      current = current->next;
+    if(newNode != NULL){
+      if(head == NULL){
+        head = newNode;
+        current = head;
+      }else{
+        current->next = newNode;
+        current = current->next;
+      }
     }
   }
   bubbelsort(head);
