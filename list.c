@@ -48,12 +48,15 @@ void print(node * head){
    printf("%d:%s\n", ((user_info*)(current->value))->uid, ((user_info*)(current->value))->uname);
   }
 }
-//
-// void freeList(node * head) {
-//   while(head->next){
-//     node * temp = head->next;
-//     free(head->uname);
-//     free(head);
-//     head = temp;
-//   }
-// }
+
+void freeList(node * head) {
+  node * temp;
+  while(head != NULL){
+    temp = head;
+    head = head->next;
+    user_info * user =temp->value;
+    free(temp);
+    free(user->uname);
+    free(user);
+  }
+}

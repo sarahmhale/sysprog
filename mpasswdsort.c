@@ -125,12 +125,11 @@ void read(FILE * fp){
       new_user->uname = malloc(strlen(uname)+1);
       strcpy(new_user->uname, uname);
       list = create_node(new_user,list);
-
      }
      line++;
   }
 
   list = bubbelsort(list);
   print(list);
-  // freeList(head);
+  freeList(list);
 }
