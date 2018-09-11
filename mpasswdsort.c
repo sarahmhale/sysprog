@@ -128,5 +128,4 @@ void read(FILE * fp){
   head = bubbelsort(head);
   print(head);
   freeList(head);
-  free(head);
 }

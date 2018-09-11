@@ -1,11 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct node {
+typedef struct user_info {
   unsigned int uid;
   char* uname;
-  struct node* next;
+}user_info;
+
+typedef struct node {
+  void * value;
+  struct node * next;
 }node;
+
+
 
 node * insert(unsigned int uid, char* uname, node * head);
 node * bubbelsort (node * head);

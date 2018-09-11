@@ -16,7 +16,7 @@ node * create_node(unsigned int uid, char* uname, node * next){
     perror("malloc did not allocate memory");
     exit(1);
   }
-  
+
   temp->uid = uid;
   temp->uname = malloc(strlen(uname) + 1);
 
@@ -31,11 +31,15 @@ node * create_node(unsigned int uid, char* uname, node * next){
 }
 
 node * bubbelsort (node * head){
-  node * i, * j, * temp;
+  node * i, * j;
+
   for ( i = head; i->next != NULL; i = i->next ){
     for ( j = i->next; j != NULL; j = j->next ){
       if(i->uid > j->uid){
-        temp = create_node(i->uid, i->uname, NULL);
+        struct node temp;
+        temp.uid = uid;
+        temp.uname = uname;
+        temp.next = NULL;
         i->uid = j->uid;
         i->uname = j->uname;
         j->uid = temp->uid;
@@ -57,12 +61,10 @@ void print(node * head){
 }
 
 void freeList(node * head) {
-    while (head->next) {
-        node *temp = head->next;
-        head->next = head->next->next;
-        free(temp->uname);
-        free(temp);
-    }
-
+  while(head->next){
+    node * temp = head->next;
     free(head->uname);
+    free(head);
+    head = temp;
+  }
 }
