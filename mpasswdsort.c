@@ -18,10 +18,10 @@ void freeList(struct node * head);
 const char * isNumber(char const * str);
 
 int main(int argc, char *argv[]){
-  FILE * fp =stdin;
+
   if(argc >1){
     if(argv[1] != NULL){
-      fp = fopen(argv[1],"r");
+      FILE * fp = fopen(argv[1],"r");
 
       if (fp == NULL) {
         perror("Error reading file");
@@ -30,9 +30,9 @@ int main(int argc, char *argv[]){
       read(fp);
       fclose(fp);
     }
+  }else{
+    read(stdin);
   }
-  read(fp);
-
   return 0;
 }
 
@@ -125,7 +125,10 @@ void read(FILE * fp){
      line++;
   }
 
-  list = bubbelsort(list);
-  print(list);
-  freeList(list);
+  if(list != NULL){
+    list = bubbelsort(list);
+    print(list);
+    freeList(list);
+  }
+
 }
