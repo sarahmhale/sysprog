@@ -22,35 +22,32 @@ node * create_node(user_info * new_user, node * next){
   return temp;
 }
 
+void swap_nodes(node * first_node, node * second_node){
+  user_info* temp = first_node->value;
+  first_node->value = second_node->value;
+  second_node->value = temp;
+}
+
 node * bubbelsort (node * head){
   node * i, * j;
-
   for ( i = head; i->next != NULL; i = i->next ){
     for ( j = i->next; j != NULL; j = j->next ){
-      if(i->uid > j->uid){
-        struct node temp;
-        temp.uid = uid;
-        temp.uname = uname;
-        temp.next = NULL
-        i->uid = j->uid;
-        i->uname = j->uname;
-        j->uid = temp->uid;
-        j->uname = temp->uname;
-        free(temp);
+      if(((user_info*)(i->value))->uid >((user_info*)(j->value))->uid){
+        swap_nodes(i,j);
       }
     }
   }
   return head;
 }
-//
-// void print(node * head){
-//   node * current = head;
-//   printf("%d:%s\n", head->uid, head->uname);
-//   while(current->next != NULL){
-//    current = current->next;
-//    printf("%d:%s\n", current->uid, current->uname);
-//   }
-// }
+
+void print(node * head){
+  node * current = head;
+  printf("%d:%s\n", ((user_info*)(head->value))->uid, ((user_info*)(head->value))->uname);
+  while(current->next != NULL){
+   current = current->next;
+   printf("%d:%s\n", ((user_info*)(current->value))->uid, ((user_info*)(current->value))->uname);
+  }
+}
 //
 // void freeList(node * head) {
 //   while(head->next){

@@ -122,14 +122,15 @@ void read(FILE * fp){
     }else{
       user_info * new_user = malloc(sizeof(user_info));
       new_user->uid = atoi(uid);
-      new_user->uname = uname;
-      create_node(new_user,list);
+      new_user->uname = malloc(strlen(uname)+1);
+      strcpy(new_user->uname, uname);
+      list = create_node(new_user,list);
 
      }
      line++;
   }
-  //
-  // head = bubbelsort(head);
-  // print(head);
+
+  list = bubbelsort(list);
+  print(list);
   // freeList(head);
 }
