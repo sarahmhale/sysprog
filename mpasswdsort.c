@@ -18,24 +18,20 @@ void freeList(struct node * head);
 const char * isNumber(char const * str);
 
 int main(int argc, char *argv[]){
+  FILE * fp =stdin;
   if(argc >1){
     if(argv[1] != NULL){
-      FILE * fp;
       fp = fopen(argv[1],"r");
 
       if (fp == NULL) {
         perror("Error reading file");
         exit(1);
       }
-
       read(fp);
       fclose(fp);
-    }else{
-      read(stdin);
     }
-  }else{
-    fprintf(stderr,"%s\n", "NO INPUT");
   }
+  read(fp);
 
   return 0;
 }
