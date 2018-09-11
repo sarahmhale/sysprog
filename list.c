@@ -8,14 +8,23 @@ node * insert(unsigned int uid, char* uname, node * head){
   head = temp;
   return head;
 }
+
 node * create_node(unsigned int uid, char* uname, node * next){
   node * temp = malloc(sizeof(node));
+
   if(temp == NULL){
-    printf("Error creating a new node.\n");
-       exit(0);
+    perror("malloc did not allocate memory");
+    exit(1);
   }
+  
   temp->uid = uid;
   temp->uname = malloc(strlen(uname) + 1);
+
+  if(temp->uname == NULL){
+    perror("malloc did not allocate memory");
+    exit(1);
+  }
+
   strcpy(temp->uname, uname);;
   temp->next = next;
   return temp;
