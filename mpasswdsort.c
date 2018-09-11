@@ -5,7 +5,7 @@
  */
 #include <stdio.h>
 #include <stdbool.h>
-#include <stdlib.h>
+ #include <stdlib.h>
 #include <string.h>
 #include<ctype.h>
 #include "list.h"
@@ -18,6 +18,8 @@ void freeList(struct node * head);
 const char * isNumber(char const * str);
 
 int main(int argc, char *argv[]){
+  printf("%s\n","hello world" );
+
   if(argc >1){
     if(argv[1] != NULL){
       FILE * fp;
@@ -121,17 +123,6 @@ void read(FILE * fp){
 
   head = bubbelsort(head);
   print(head);
-//  freeList(head);
+  freeList(head);
+  free(head);
 }
-
-
-// void freeList(struct node * head){
-//    struct node * current;
-//    while (head != NULL)
-//     {
-//        current = head;
-//        free(current->uname);
-//        head = head->next;
-//        free(current);
-//     }
-// }

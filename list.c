@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "list.h"
 
 node * insert(unsigned int uid, char* uname, node * head){
@@ -14,23 +15,23 @@ node * create_node(unsigned int uid, char* uname, node * next){
        exit(0);
   }
   temp->uid = uid;
-  temp->uname =  uname;
+  temp->uname = malloc(strlen(uname) + 1);
+  strcpy(temp->uname, uname);;
   temp->next = next;
   return temp;
 }
 
 node * bubbelsort (node * head){
-  node * i, * j;
-  node * temp = NULL;
+  node * i, * j, * temp;
   for ( i = head; i->next != NULL; i = i->next ){
     for ( j = i->next; j != NULL; j = j->next ){
       if(i->uid > j->uid){
-        temp->uid = i->uid;
-        temp->uname =i->uname;
+        temp = create_node(i->uid, i->uname, NULL);
         i->uid = j->uid;
         i->uname = j->uname;
         j->uid = temp->uid;
         j->uname = temp->uname;
+        free(temp);
       }
     }
   }
@@ -44,4 +45,15 @@ void print(node * head){
    current = current->next;
    printf("%d:%s\n", current->uid, current->uname);
   }
+}
+
+void freeList(node * head) {
+    while (head->next) {
+        node *temp = head->next;
+        head->next = head->next->next;
+        free(temp->uname);
+        free(temp);
+    }
+
+    free(head->uname);
 }
