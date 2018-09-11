@@ -10,6 +10,7 @@
 #include<ctype.h>
 #include "list.h"
 #define BUFSIZE 1023
+#define RETURN_VALUE 0;
 
 void read(FILE * fp);
 char * strtok_single(char * buffer, char const * delims);
@@ -101,19 +102,26 @@ void read(FILE * fp){
 
 
     if(isStringEmpty(uname) == NULL){
+      RETURN_VALUE = 1;
       fprintf(stderr,"Line %d : %s\n",line, "uname format wrong");
     }
     else if(isStringEmpty(directory) == NULL){
+        RETURN_VALUE = 1;
         fprintf(stderr,"Line %d : %s\n",line, "directory format wrong");
+
     }
     else if(isStringEmpty(shell) == NULL){
+        RETURN_VALUE = 1;
         fprintf(stderr,"Line %d : %s\n",line, "shell format wrong");
+
     }
     else if(isNumber(uid) == NULL){
+        RETURN_VALUE = 1;
         fprintf(stderr,"Line %d : %s\n",line, "uid format wrong");
     }
 
     else if(isNumber(gid) == NULL){
+      RETURN_VALUE = 1;
         fprintf(stderr,"Line %d :%s\n",line, "gid format wrong");
     }else{
       user_info * new_user = malloc(sizeof(user_info));
@@ -126,6 +134,7 @@ void read(FILE * fp){
   }
 
   if(list != NULL){
+    RETURN_VALUE = 0;
     list = bubbelsort(list);
     print(list);
     freeList(list);
