@@ -10,13 +10,14 @@
 #include<ctype.h>
 #include "list.h"
 #define BUFSIZE 1023
-#define RETURN_VALUE 0;
 
 void read(FILE * fp);
 char * strtok_single(char * buffer, char const * delims);
 const char * isStringEmpty(char const * str);
 void freeList(struct node * head);
 const char * isNumber(char const * str);
+
+int fail = 0;
 
 int main(int argc, char *argv[]){
 
@@ -34,6 +35,11 @@ int main(int argc, char *argv[]){
   }else{
     read(stdin);
   }
+
+  if(fail > 0){
+    return 1;
+  }
+
   return 0;
 }
 
@@ -102,27 +108,26 @@ void read(FILE * fp){
 
 
     if(isStringEmpty(uname) == NULL){
-      RETURN_VALUE = 1;
+      fail++;
       fprintf(stderr,"Line %d : %s\n",line, "uname format wrong");
     }
     else if(isStringEmpty(directory) == NULL){
-        RETURN_VALUE = 1;
-        fprintf(stderr,"Line %d : %s\n",line, "directory format wrong");
+      fail++;
+      fprintf(stderr,"Line %d : %s\n",line, "directory format wrong");
 
     }
     else if(isStringEmpty(shell) == NULL){
-        RETURN_VALUE = 1;
-        fprintf(stderr,"Line %d : %s\n",line, "shell format wrong");
-
+      fail++;
+      fprintf(stderr,"Line %d : %s\n",line, "shell format wrong");
     }
     else if(isNumber(uid) == NULL){
-        RETURN_VALUE = 1;
-        fprintf(stderr,"Line %d : %s\n",line, "uid format wrong");
+      fail++;
+      fprintf(stderr,"Line %d : %s\n",line, "uid format wrong");
     }
 
     else if(isNumber(gid) == NULL){
-      RETURN_VALUE = 1;
-        fprintf(stderr,"Line %d :%s\n",line, "gid format wrong");
+      fail++;
+      fprintf(stderr,"Line %d :%s\n",line, "gid format wrong");
     }else{
       user_info * new_user = malloc(sizeof(user_info));
       new_user->uid = atoi(uid);
@@ -134,7 +139,6 @@ void read(FILE * fp){
   }
 
   if(list != NULL){
-    RETURN_VALUE = 0;
     list = bubbelsort(list);
     print(list);
     freeList(list);
