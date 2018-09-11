@@ -90,7 +90,7 @@ const char * isStringEmpty(char const * str){
 
 
 void read(FILE * fp){
-  node * head = NULL;
+  node * list = NULL;
   int line = 1;
   char buffer[BUFSIZE];
   while(fgets(buffer, BUFSIZE, fp) != NULL){
@@ -120,12 +120,16 @@ void read(FILE * fp){
     else if(isNumber(gid) == NULL){
         fprintf(stderr,"Line %d :%s\n",line, "gid format wrong");
     }else{
-       head = insert(atoi(uid),uname, head);
+      user_info * new_user = malloc(sizeof(user_info));
+      new_user->uid = atoi(uid);
+      new_user->uname = uname;
+      create_node(new_user,list);
+
      }
      line++;
   }
-
-  head = bubbelsort(head);
-  print(head);
-  freeList(head);
+  //
+  // head = bubbelsort(head);
+  // print(head);
+  // freeList(head);
 }

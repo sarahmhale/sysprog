@@ -3,13 +3,13 @@
 #include <string.h>
 #include "list.h"
 
-node * insert(unsigned int uid, char* uname, node * head){
-  node * temp = create_node(uid,uname,head);
+node * insert(user_info * new_user, node * head){
+  node * temp = create_node(new_user, head);
   head = temp;
   return head;
 }
 
-node * create_node(unsigned int uid, char* uname, node * next){
+node * create_node(user_info * new_user, node * next){
   node * temp = malloc(sizeof(node));
 
   if(temp == NULL){
@@ -17,15 +17,7 @@ node * create_node(unsigned int uid, char* uname, node * next){
     exit(1);
   }
 
-  temp->uid = uid;
-  temp->uname = malloc(strlen(uname) + 1);
-
-  if(temp->uname == NULL){
-    perror("malloc did not allocate memory");
-    exit(1);
-  }
-
-  strcpy(temp->uname, uname);;
+  temp->value = new_user;
   temp->next = next;
   return temp;
 }
@@ -39,7 +31,7 @@ node * bubbelsort (node * head){
         struct node temp;
         temp.uid = uid;
         temp.uname = uname;
-        temp.next = NULL;
+        temp.next = NULL
         i->uid = j->uid;
         i->uname = j->uname;
         j->uid = temp->uid;
@@ -50,21 +42,21 @@ node * bubbelsort (node * head){
   }
   return head;
 }
-
-void print(node * head){
-  node * current = head;
-  printf("%d:%s\n", head->uid, head->uname);
-  while(current->next != NULL){
-   current = current->next;
-   printf("%d:%s\n", current->uid, current->uname);
-  }
-}
-
-void freeList(node * head) {
-  while(head->next){
-    node * temp = head->next;
-    free(head->uname);
-    free(head);
-    head = temp;
-  }
-}
+//
+// void print(node * head){
+//   node * current = head;
+//   printf("%d:%s\n", head->uid, head->uname);
+//   while(current->next != NULL){
+//    current = current->next;
+//    printf("%d:%s\n", current->uid, current->uname);
+//   }
+// }
+//
+// void freeList(node * head) {
+//   while(head->next){
+//     node * temp = head->next;
+//     free(head->uname);
+//     free(head);
+//     head = temp;
+//   }
+// }

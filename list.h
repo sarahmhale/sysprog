@@ -13,7 +13,7 @@ typedef struct node {
 
 
 
-node * insert(unsigned int uid, char* uname, node * head);
+node * insert(user_info * new_user, node * head);
 node * bubbelsort (node * head);
-node * create_node(unsigned int uid, char* uname, node * next);
+node * create_node(user_info * new_user, node * next);
 void print(node * head);
