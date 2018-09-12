@@ -3,12 +3,16 @@
 #include <string.h>
 #include "list.h"
 
+/*Purpose: Inserts a node at the start of the list
+*/
 node * insert(user_info * new_user, node * head){
   node * temp = create_node(new_user, head);
   head = temp;
   return head;
 }
 
+/*Purpose: creates a new node.
+*/
 node * create_node(user_info * new_user, node * next){
   node * temp = malloc(sizeof(node));
 
@@ -22,12 +26,16 @@ node * create_node(user_info * new_user, node * next){
   return temp;
 }
 
+/*Purpose: swap places of two nodes
+*/
 void swap_nodes(node * first_node, node * second_node){
   user_info* temp = first_node->value;
   first_node->value = second_node->value;
   second_node->value = temp;
 }
 
+/*Purpose: sorts the nodes by UID in descending order
+*/
 node * bubbelsort (node * head){
   node * i, * j;
   for ( i = head; i->next != NULL; i = i->next ){
@@ -39,7 +47,8 @@ node * bubbelsort (node * head){
   }
   return head;
 }
-
+/*Purpose: Prints the user info by looping through the list.
+*/
 void print(node * head){
   node * current = head;
   printf("%d:%s\n", ((user_info*)(head->value))->uid, ((user_info*)(head->value))->uname);
@@ -49,6 +58,8 @@ void print(node * head){
   }
 }
 
+/*Purpose: Frees the memory that the list has used
+*/
 void freeList(node * head) {
   node * temp;
   while(head != NULL){
