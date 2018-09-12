@@ -16,7 +16,6 @@ char * strtok_single(char * buffer, char const * delims);
 const char * isStringEmpty(char const * str);
 void freeList(struct node * head);
 const char * isNumber(char const * str);
-
 int fail = 0;
 
 int main(int argc, char *argv[]){
@@ -69,7 +68,6 @@ char * strtok_single (char * str, char const * delims){
   return ret;
 }
 
-
 const char * isNumber(char const * str){
   if(str != NULL || *str != '\0'){
     while(*str){
@@ -91,12 +89,16 @@ const char * isStringEmpty(char const * str){
   return str;
 }
 
-
 void read(FILE * fp){
   node * list = NULL;
   int line = 1;
+  char destination[BUFSIZE];
   char buffer[BUFSIZE];
   while(fgets(buffer, BUFSIZE, fp) != NULL){
+    int len = strlen(buffer);
+    if( buffer[len-1] == '\n' )
+      buffer[len-1] = 0;
+    strcpy(destination, buffer);
     const char seperator[2] = ":";
     char * uname = strtok_single(buffer, ":");
     strtok_single(NULL, ":");
@@ -109,26 +111,34 @@ void read(FILE * fp){
 
     if(isStringEmpty(uname) == NULL){
       fail++;
-      fprintf(stderr,"Line %d : %s\n",line, "uname format wrong");
+      fprintf(stderr,"Line %d : Invalid format: %s\n",line, destination);
     }
     else if(isStringEmpty(directory) == NULL){
       fail++;
-      fprintf(stderr,"Line %d : %s\n",line, "directory format wrong");
-
+      fprintf(stderr,"Line %d : Invalid format: %s\n",line, destination );
     }
     else if(isStringEmpty(shell) == NULL){
       fail++;
-      fprintf(stderr,"Line %d : %s\n",line, "shell format wrong");
+      fprintf(stderr,"Line %d : Invalid format: %s\n",line, destination );
+    }
+    else if(atoi(uid)<0){
+      fail++;
+      fprintf(stderr,"Line %d : The 'gid' field has to be postive: %s\n",line, destination);
+    }
+    else if(atoi(gid)<0){
+      fail++;
+      fprintf(stderr,"Line %d : The 'gid' field has to be postive: %s\n",line, destination);
     }
     else if(isNumber(uid) == NULL){
       fail++;
-      fprintf(stderr,"Line %d : %s\n",line, "uid format wrong");
+      fprintf(stderr,"Line %d : The 'uid' field has to be numeric: %s\n",line, destination);
+    }
+    else if (isNumber(gid) == NULL){
+      fail++;
+      fprintf(stderr,"Line %d : The 'gid' field has to be numeric: %s\n",line, destination);
     }
 
-    else if(isNumber(gid) == NULL){
-      fail++;
-      fprintf(stderr,"Line %d :%s\n",line, "gid format wrong");
-    }else{
+    else{
       user_info * new_user = malloc(sizeof(user_info));
       new_user->uid = atoi(uid);
       new_user->uname = malloc(strlen(uname)+1);
