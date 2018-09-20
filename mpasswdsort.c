@@ -172,6 +172,7 @@ void read(FILE * fp){
       }
       new_user->uid = atoi(uid);
       new_user->uname = malloc(strlen(uname)+1);
+      
       if(new_user->uname == NULL){
         perror("malloc did not allocate memory");
         exit(1);
