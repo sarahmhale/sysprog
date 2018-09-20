@@ -165,8 +165,17 @@ void read(FILE * fp){
       fail++;
     }else{
       user_info * new_user = malloc(sizeof(user_info));
+
+      if(new_user == NULL){
+        perror("malloc did not allocate memory");
+        exit(1);
+      }
       new_user->uid = atoi(uid);
       new_user->uname = malloc(strlen(uname)+1);
+      if(new_user->uname == NULL){
+        perror("malloc did not allocate memory");
+        exit(1);
+      }
       strcpy(new_user->uname, uname);
       list = create_node(new_user,list);
      }
