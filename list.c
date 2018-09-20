@@ -5,7 +5,7 @@
 
 /*Purpose: Inserts a node at the start of the list
 */
-node * insert(user_info * new_user, node * head){
+node * insert(void * new_user, node * head){
   node * temp = create_node(new_user, head);
   head = temp;
   return head;
@@ -13,7 +13,7 @@ node * insert(user_info * new_user, node * head){
 
 /*Purpose: creates a new node.
 */
-node * create_node(user_info * new_user, node * next){
+node * create_node(void * new_user, node * next){
   node * temp = malloc(sizeof(node));
 
   if(temp == NULL){
